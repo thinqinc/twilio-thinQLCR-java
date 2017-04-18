@@ -8,14 +8,11 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import java.util.Objects;
 
 public class TwilioWrapperLibrary {
 
     private static final String THINQ_DOMAIN = "wap.thinq.com";
-    private static final String TWIML_RESOURCE_URL = "http://demo.twilio.com/docs/voice.xml";
 
     private TwilioRestClient client;
     private String twilio_account_sid;
@@ -55,29 +52,26 @@ public class TwilioWrapperLibrary {
 
     /**
      * Initiate a call to the customer
-     * @param from      'from' number
-     * @param to        'to' number
-     * @return Call sid or error string
+     * pass through of ArrayList of NameValuePairs that Twilio object expects
      */
-    public String call(String from, String to){
-        if(!this.isClientValid()) {
-            return "Invalid Twilio Account details.";
-        }
 
-        // Build a filter for the CallList
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("Url", this.TWIML_RESOURCE_URL));
-        params.add(new BasicNameValuePair("To", "sip:" + to + "@" + this.THINQ_DOMAIN + "?thinQid=" + this.thinQ_id + "&thinQtoken=" + this.thinQ_token));
-        params.add(new BasicNameValuePair("From", from));
-
-        CallFactory callFactory = client.getAccount().getCallFactory();
+    public Call call(ArrayList<NameValuePair> params) throws TwilioRestException {
+        CallFactory callFactory = this.client.getAccount().getCallFactory();
         Call call;
-        try {
-            call = callFactory.create(params);
-            return call.getSid();
-        } catch (TwilioRestException e) {
-            e.printStackTrace();
-            return e.getMessage();
+
+        // ensure the To field is properly formatted
+        String to_number;
+        ArrayList<NameValuePair> twilioparams = new ArrayList<NameValuePair>();
+        for (NameValuePair temp : params) {
+            if (Objects.equals(temp.getName(), "To")) {
+                to_number = temp.getValue().startsWith("sip:") ? temp.getValue() : "sip:" + temp.getValue() + "@" + THINQ_DOMAIN + "?thinQid=" + thinQ_id + "&thinQtoken=" + thinQ_token;
+                twilioparams.add(new BasicNameValuePair("To", to_number));
+            } else {
+                twilioparams.add(new BasicNameValuePair(temp.getName(), temp.getValue()));
+            }
         }
+
+        call = callFactory.create(twilioparams);
+        return call;
     }
 }
