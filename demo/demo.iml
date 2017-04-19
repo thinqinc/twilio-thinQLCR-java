@@ -7,7 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="module" module-name="twilio-thinQLCR-java" />
+    <orderEntry type="module" module-name="twilio-thinQLCR-java" exported="" />
+    <orderEntry type="library" exported="" name="Maven: com.twilio.sdk:twilio-java-sdk:6.3.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.httpcomponents:httpclient:4.5.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.httpcomponents:httpcore:4.4.5" level="project" />
   </component>
 </module>
