@@ -1,4 +1,4 @@
-package com.twilio.thinq;
+package com.thinq.twilio;
 
 import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.TwilioRestException;

@@ -1,7 +1,8 @@
 import com.twilio.sdk.TwilioRestException;
 import com.twilio.sdk.resource.instance.Call;
-import com.twilio.thinq.TwilioWrapperLibrary;
-import com.twilio.thinq.TwilioWrapperLibraryBuilder;
+import com.thinq.twilio.TwilioWrapperLibrary;
+import com.thinq.twilio.TwilioWrapperLibraryBuilder;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 

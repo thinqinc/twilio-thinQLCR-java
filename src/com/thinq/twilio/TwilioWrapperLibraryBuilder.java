@@ -1,4 +1,4 @@
-package com.twilio.thinq;
+package com.thinq.twilio;
 
 public class TwilioWrapperLibraryBuilder {
     private String twilio_account_sid;
